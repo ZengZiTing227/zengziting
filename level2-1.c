@@ -20,9 +20,21 @@ int main() {
         fgets(input, sizeof(input), stdin);
         if (sscanf(input, "%c%d%d%d", &goods[goodsCount].name, &goods[goodsCount].channel, 
         &goods[goodsCount].price, &goods[goodsCount].quantity) == 4) {
-            goodsCount++;
-            if (goods[goodsCount - 1].name == '0' ) {
-                break;
+            // 检查通道内是否已存放不同货物
+            int channelavaliable = 0;
+            for (int i = 0; i < goodsCount; i++) {
+                if (goods[i].channel == goods[goodsCount].channel && goods[i].name!= goods[goodsCount].name) {
+                    channelavaliable = 1;
+                    break;
+                }
+            }
+            if (channelavaliable) {
+                printf("该通道已存放其他货物，不能放置不同货物。\n");
+            } else {
+                goodsCount++;
+                if (goods[goodsCount - 1].name == '0' ) {
+                    break;
+                }
             }
         } else {
             printf("输入错误，请重新输入货物信息。\n");
